@@ -1,0 +1,55 @@
+; Copyright (C) 2021 Renesas Electronics Corp.
+; Author: Biju Das <biju.das.jz@bp.renesas.com>
+
+WRITER_NAME = "Flash_Writer_SCIF_RZV2L_SMARC_PMIC_DDR4_2GB_1PCS.mot"
+BL2_NAME = "bl2_bp-smarc-rzv2l_pmic.srec"
+FIP_NAME = "fip-smarc-rzv2l_pmic.srec"
+
+getdir BASE_PATH
+strconcat BASE_PATH "\"
+
+WRITER_PATH=BASE_PATH
+strconcat WRITER_PATH WRITER_NAME
+
+BL2_PATH=BASE_PATH
+strconcat BL2_PATH BL2_NAME
+
+FIP_PATH=BASE_PATH
+strconcat FIP_PATH FIP_NAME
+
+waitregex "please send !"
+sendfile WRITER_PATH 1
+waitregex ">"
+
+sendln ""
+sendln "xls2"
+waitregex "Please Input"
+sendln "11e00"
+waitregex "Please Input"
+sendln "00000"
+waitregex "please send !"
+sendfile BL2_PATH 1
+waitregex "SPI Data Clear"
+sendln "y"
+waitregex ">"
+
+
+sendln "xls2"
+waitregex "Please Input"
+sendln "00000"
+waitregex "Please Input"
+sendln "1d200"
+waitregex "please send !"
+sendfile FIP_PATH 1
+waitregex "SPI Data Clear"
+sendln "y"
+waitregex ">"
+
+
+
+
+
+
+
+
+
